@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="description" content="動画などのビットレートを算出">
+  <title>
+    ビットレート計算機
+  </title>
+  <script type="text/javascript" src="../js/bitratecalc.js"></script>
+  <link rel="stylesheet" href="../css/bitratecalc.css">
+</head>
+
+<body>
+  <div id="main">
+    <div id="contents">
+      <h1 id="c">
+        ビットレート計算機
+      </h1>
+      <p>
+        <nobr>
+          <u>Minites</u>には分を、<wbr>
+          <u>Second</u>には<wbr>
+          秒を指定してください。
+        </nobr>
+      </p>
+      <div id="buttons">
+        <p>
+          <h2>
+            お手軽設定
+          </h2>
+          <p id="big">
+            Audio Bitrate
+          </p>
+          <p>
+            <input type="button" value="128Kbps" onclick="SetAudio(128)">
+            <input type="button" value="192Kbps" onclick="SetAudio(192)">
+            <input type="button" value="256Kbps" onclick="SetAudio(256)">
+            <input type="button" value="320Kbps" onclick="SetAudio(320)">
+          </p>
+          <p id="big">
+            Video Bitrate
+          </p>
+          <p>
+            <input type="button" value="2Mbps" onclick="SetVideo(2048)">
+            <input type="button" value="4Mbps" onclick="SetVideo(4096)">
+            <input type="button" value="8Mbps" onclick="SetVideo(8192)">
+            <input type="button" value="12Mbps" onclick="SetVideo(12288)">
+            <br>
+            <input type="button" value="16Mbps" onclick="SetVideo(16384)">
+            <input type="button" value="20Mbps" onclick="SetVideo(20480)">
+            <input type="button" value="24Mbps" onclick="SetVideo(24576)">
+          </p>
+          <p id="big">
+            容量<br>
+            <input type="button" value="FD(1.44MB)" onclick="SetSize(1474560)">
+            <input type="button" value="100MiB" onclick="SetSize(104857600)">
+            <input type="button" value="100MiB" onclick="SetSize(209715200)">
+            <input type="button" value="1GB" onclick="SetSize(1000000000)">
+            <br>
+            <input type="button" value="1GiB" onclick="SetSize(1073741824)">
+            <input type="button" value="4GiB" onclick="SetSize(4294967296)">
+            <input type="button" value="DVD(5GB)" onclick="SetSize(5000000000)">
+            <input type="button" value="BD(25GB)" onclick="SetSize(25000000000)">
+            <br>
+            <input type="button" value="1TB" onclick="SetSize(1000000000000)">
+            <input type="button" value="2TB" onclick="SetSize(2000000000000)">
+            <input type="button" value="3TB" onclick="SetSize(3000000000000)">
+            <input type="button" value="4TB" onclick="SetSize(4000000000000)">
+            <input type="button" value="5TB" onclick="SetSize(5000000000000)">
+            <input type="button" value="6TB" onclick="SetSize(6000000000000)">
+          </p>
+        </p>
+      </div>
+      <div id="calc">
+        <h2 title="時間とビットレートを指定して、できあがるファイルサイズを計算します" id="c">
+          出力サイズ計算
+        </h2>
+        <p>
+          <input type="text" size="3" id="h">
+          Hours<br>
+          <input type="text" size="3" id="min">
+          Minites<br>
+          <input type="text" size="3" id="sec">
+          Second<br>
+          Video
+          <input type="text" size="3" id="video">
+          Kbps
+          <br>
+          Audio
+          <input type="text" size="3" id="audio">
+          Kbps<br>
+          <input type="button" value="計算" onclick="CalcTargetSize()">
+          (空欄は0として計算されます)<br>
+          <input type="text" size="10" id="TargetSize">
+          Bytes
+          <br>
+          (
+          <input type="text" size="3" id="ShortSize">
+          MiB)
+          <br>
+          (
+          <input type="text" size="3" id="GB">
+          GiB)
+        </p>
+        <h2 title="時間と目標サイズを指定して、使うことのできるビットレートを算出します" id="c">
+          ビットレート算出
+        </h2>
+        <p>
+          <input type="text" size="3" id="h2">
+          Hours<br>
+          <input type="text" size="3" id="min2">
+          Minites<br>
+          <input type="text" size="3" id="sec2">
+          Second<br>
+          目標サイズ
+          <input type="text" size="10" id="FileSize">
+          Bytes<br>
+          <input type="button" value="計算" onclick="CalcTargetBitrate()">
+          (空欄は0として計算されます)<br>
+          Video
+          <input type="text" size="3" id="vb">
+          Kbps<br>
+          Audio
+          <input type="text" size="3" id="ab">
+          Kbps
+        </p>
+        <h2 title="メディアサイズとビットレートを指定して、何分詰め込めるのかを求めます" id="c">
+          詰め込み計算
+        </h2>
+        <p>
+          メディアサイズ
+          <input type="text" size="10" id="MediaSize">
+          Bytes<br>
+          Video
+          <input type="text" size="3" id="mvb">
+          Kbps
+          <br>
+          Audio
+          <input type="text" size="3" id="mab">
+          Kbps<br>
+          <input type="button" value="計算" onclick="CalcMediaTime()">
+          (空欄は0として計算されます)<br>
+          <input type="text" size="3" id="h3">
+          Hours<br>
+          <input type="text" size="3" id="min3">
+          Minites<br>
+          <input type="text" size="3" id="sec3">
+          Second
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p id="c">
+      <a href="#">
+        △ ページの先頭へ △
+      </a>
+    </p>
+  </footer>
+</body>
+
+</html>

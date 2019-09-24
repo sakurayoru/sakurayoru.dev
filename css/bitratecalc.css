@@ -1,0 +1,33 @@
+@charset "UTF-8";
+body {
+  margin: 0px auto;
+  padding: 0px;
+  width: 90vmin;
+  text-align: left;
+}
+u{
+  color:  #fff;
+  background-color:  #CC9929;
+}
+#buttons{
+  float:  center;
+  text-align: center;
+  background-color:  #CC9929;
+}
+#buttons p {
+  color:  #fff;
+  padding:  1px ;
+}
+#big{
+  font-size: large;
+}
+#calc {
+  width: 75vmin;
+  margin: 0px auto;
+}
+#calc p {
+  margin-bottom:  8px;
+}
+#c{
+  text-align:  center;
+}
