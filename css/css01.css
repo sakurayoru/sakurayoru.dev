@@ -30,11 +30,11 @@ h1, h2, h3, h4, h5 {
     text-align: right;
 }
 
-/*  改行禁止
-    class="nobr" */
+/*  改行禁止 */
 
-.nobr {
+div {
     white-space: nowrap;
+    display: inline-block;
 }
 
 /* 画像の最大幅 */
