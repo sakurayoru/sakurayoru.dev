@@ -63,7 +63,7 @@ img {
 }
 
 /*  marquee
-    class="marquee" */
+    class="marquee-anim" */
 
 .marquee-anim {
     overflow: hidden;
